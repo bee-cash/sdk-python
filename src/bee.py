@@ -34,6 +34,14 @@ class Bee:
         return self._execute('balance', {'coin': coin})
 
 
+    def charge_boleto_create(self, array = {}):
+        return self._execute('charge/boleto/create', array)
+
+
+    def charge_client_create(self, array = {}):
+        return self._execute('charge/client/create', array)
+
+
     def coin_list(self):
         return self._execute('coin/list')
 
@@ -42,21 +50,5 @@ class Bee:
         return self._execute('coin/info', {'coin': coin})
 
 
-    def invoice_create(self, array = {}):
-        return self._execute('invoice/create', array)
-
-
-    def invoice_pay(self, array = {}):
-        return self._execute('invoice/pay', array)
-
-
-    def invoice_view(self, array = {}):
-        return self._execute('invoice/view', array)
-
-
     def transfer_create(self, array = {}):
         return self._execute('transfer/create', array)
-
-
-    def user_info(self, username = ''):
-        return self._execute('user/info', {'username': username})
