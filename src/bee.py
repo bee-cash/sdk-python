@@ -17,7 +17,7 @@ class Bee:
     def _execute(self, end_point, array = {}):
         return post(
             url=self._url+end_point,
-            params=array,
+            json=array,
             headers=self._headers
         ).json()
 
