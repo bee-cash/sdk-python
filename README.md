@@ -8,7 +8,7 @@ Veja como é simples fazer uma transferência:
 
 **1: Inclua a biblioteca**
 ```python
-from bee import Bee
+from src.bee import Bee
 ```  
 
 **2: Inicie a instância** 
