@@ -38,6 +38,10 @@ class Bee:
         return self._execute('charge/boleto/create', array)
 
 
+    def charge_boleto_receive_in_cash(self, boleto_id):
+        return self._execute('charge/boleto/receive-in-cash', {'boleto_id': boleto_id})
+
+
     def charge_client_create(self, array = {}):
         return self._execute('charge/client/create', array)
 
