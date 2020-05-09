@@ -34,6 +34,10 @@ class Bee:
         return self._execute('balance', {'coin': coin})
 
 
+    def bank_deposit_boleto_create(self, array):
+        return self._execute('bank/deposit/boleto/create', array)
+
+
     def charge_boleto_create(self, array = {}):
         return self._execute('charge/boleto/create', array)
 
