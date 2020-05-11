@@ -33,6 +33,6 @@ Campo | Tipo | Descrição
 :----|:----|:---------
 success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
 errors | dict | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
-result | dict | array com os dados da transação. |
+result | dict | dict com os dados da transação. |
 
 ##### Confira a documentação completa [clicando aqui](https://github.com/bee-payments/sdk-python/blob/master/docs/pt.md).

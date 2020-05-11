@@ -51,15 +51,15 @@ Responsável por criar endereços de depósito para altcoins.
 Campo | Tipo | Descrição
 :----|:----|:---------
 success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
-errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
-result | array | array com os dados do endereço criado. |
+errors | dict | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
+result | dict | dict com os dados do endereço criado. |
 
 #### Exemplo:
 
 ```python
 bee.altcoin_address_create({
    'coin': 'btc',
-   'label': 'Endereco BTC'
+   'label': 'Endereco BTC',
 })
 ```
 
@@ -85,8 +85,8 @@ Responsável por realizar saques de altcoins.
 Campo | Tipo | Descrição
 :----|:----|:---------
 success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
-errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
-result | array | array com os dados da retirada. |
+errors | dict | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
+result | dict | dict com os dados da retirada. |
 
 #### Exemplo:
 
@@ -95,7 +95,7 @@ bee.altcoin_withdrawal_create({
    'address': '18cBEMRxXHqzWWCxZNtU91F5sbUNKhL5PX',
    'amount': 0.01,
    'coin': 'btc',
-   'label': 'saque para minha carteira'
+   'label': 'saque para minha carteira',
 })
 ```
 
@@ -116,16 +116,16 @@ Responsável por buscar o saldo da sua conta.
 Campo | Tipo | Descrição
 :----|:----|:---------
 success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
-errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
-result | array | array com o saldo da moeda informada. |
+errors | dict | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
+result | dict | dict com o saldo da moeda informada. |
 
 **Retorno (não informando o código da moeda)**
 
 Campo | Tipo | Descrição
 :----|:----|:---------
 success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
-errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
-result | array | array com o saldo de todas as moedas disponíveis. |
+errors | dict | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
+result | dict | dict com o saldo de todas as moedas disponíveis. |
 
 #### Exemplo:
 
@@ -136,6 +136,38 @@ bee.balance('btc')
 
 ```python
 bee.balance()
+```
+
+&#160;
+
+## **_bank_deposit_boleto_create_**
+
+Responsável por criar um boleto de depósito.  
+Nessa modalidade você pode criar boletos sem precisar cadastrar um cliente, observe que nessa requisição, você sempre será o sacado do boleto. 
+
+**Parâmetros**
+
+| Campo | Tipo | Obrigatório | Descrição |
+|:------|:-----|:-----------:|:----------|
+| coin | string | não | código da moeda na qual a cobrança deve ser gerada, se não enviar, vamos considerar **brl**. |
+| amount | float | sim | valor do boleto. |
+| due_at | date | sim | data de vecimento do boleto. |
+
+**Retorno**
+
+Campo | Tipo | Descrição
+:----|:----|:---------
+success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
+errors | dict | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
+result | dict | dict com os dados do boleto de depósito criado. |
+
+#### Exemplo:
+
+```python
+bee.bank_deposit_boleto_create({
+   'amount': 59.99,
+   'due_at':'2020-04-29',
+})
 ```
 
 &#160;
@@ -153,8 +185,8 @@ nenhum.
 Campo | Tipo | Descrição
 :----|:----|:---------
 success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
-errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
-result | array | array com todas as moedas disponíveis. |
+errors | dict | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
+result | dict | dict com todas as moedas disponíveis. |
 
 #### Exemplo:
 
@@ -179,8 +211,8 @@ Responsável por buscar as informações de uma moeda.
 Campo | Tipo | Descrição
 :----|:----|:---------
 success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
-errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
-result | array | array com os dados da moeda. |
+errors | dict | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
+result | dict | dict com os dados da moeda. |
 
 #### Exemplo:
 
@@ -217,8 +249,8 @@ Geralmente utilizado para que seus clientes façam pagamentos dentro da [Bee](ht
 Campo | Tipo | Descrição
 :----|:----|:---------
 success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
-errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
-result | array | array com os dados da fatura criada. |
+errors | dict | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
+result | dict | dict com os dados da fatura criada. |
 
 #### Exemplo:
 
@@ -227,8 +259,33 @@ bee.charge_boleto_create({
    'amount': 59.99,
    'client_id': 5,
    'due_at': '2020-04-29',
-   'label': 'Cobrança referente a compra de tenis sport'
+   'label': 'Cobrança referente a compra de tenis sport',
 })
+```
+
+&#160;
+
+## **_charge_boleto_receive_in_cash_**
+
+Responsável por marcar o boleto como recebido em dinheiro.  
+
+**Parâmetros**
+
+| Campo | Tipo | Obrigatório | Descrição |
+|:------|:-----|:-----------:|:----------|
+| boleto_id | int | sim | id do boleto a ser recebido |
+
+**Retorno**
+
+Campo | Tipo | Descrição
+:----|:----|:---------
+success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
+errors | dict | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
+
+#### Exemplo:
+
+```python
+bee.charge_boleto_receive_in_cash(boleto_id)
 ```
 
 &#160;
@@ -258,8 +315,8 @@ Responsável por criar um cliente para cobranças.
 Campo | Tipo | Descrição
 :----|:----|:---------
 success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
-errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
-result | array | array com os dados do pagamento. |
+errors | dict | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
+result | dict | dict com os dados do pagamento. |
 
 #### Exemplo:
 
@@ -274,7 +331,7 @@ bee.charge_client_create({
         'zip_code': '74590-510',
    },
    'phone': {
-        'number': '(12) 23456-7891'
+        'number': '(12) 23456-7891',
    }
 })
 ```
@@ -299,8 +356,8 @@ Responsável por tranferir dinheiro para outro usuário.
 Campo | Tipo | Descrição
 :----|:----|:---------
 success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
-errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
-result | array | array com os dados da transferência. |
+errors | dict | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
+result | dict | dict com os dados da transferência. |
 
 #### Exemplo:
 
