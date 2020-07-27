@@ -1,4 +1,4 @@
-from requests import post
+from requests import Request
 
 
 class Bee:
@@ -14,49 +14,45 @@ class Bee:
         }
 
 
-    def _execute(self, end_point, array = {}):
-        return post(
+    def _execute(self, end_point, array = {}, method = 'post'):
+        return Request(method,
             url=self._url+end_point,
             json=array,
             headers=self._headers
         ).json()
 
 
-    def altcoin_address_create(self, array = {}):
-        return self._execute('altcoin/address/create', array)
+    def altcoin_address(self, array = {}):
+        return self._execute('altcoin/address', array)
 
 
-    def altcoin_withdrawal_create(self, array = {}):
-        return self._execute('altcoin/withdrawal/create', array)
+    def altcoin_withdrawal(self, array = {}):
+        return self._execute('altcoin/withdrawal', array)
 
 
     def balance(self, coin = ''):
-        return self._execute('balance', {'coin': coin})
+        return self._execute(f'balance/{coin}', method='get')
 
 
-    def bank_deposit_boleto_create(self, array):
-        return self._execute('bank/deposit/boleto/create', array)
+    def bank_deposit_boleto(self, array):
+        return self._execute('bank/deposit/boleto', array)
 
 
-    def charge_boleto_create(self, array = {}):
-        return self._execute('charge/boleto/create', array)
+    def charge_boleto(self, array = {}):
+        return self._execute('charge/boleto', array)
 
 
     def charge_boleto_receive_in_cash(self, boleto_id):
-        return self._execute('charge/boleto/receive-in-cash', {'boleto_id': boleto_id})
+        return self._execute(f'charge/boleto/{boleto_id}/receive-in-cash')
 
 
-    def charge_client_create(self, array = {}):
-        return self._execute('charge/client/create', array)
+    def charge_client(self, array = {}):
+        return self._execute('charge/client', array)
 
 
-    def coin_list(self):
-        return self._execute('coin/list')
+    def coin(self, coin = ''):
+        return self._execute(f'coin/{coin}', {}, 'get')
 
 
-    def coin_info(self, coin = ''):
-        return self._execute('coin/info', {'coin': coin})
-
-
-    def transfer_create(self, array = {}):
-        return self._execute('transfer/create', array)
+    def transfer(self, array = {}):
+        return self._execute('transfer', array)
